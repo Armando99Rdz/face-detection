@@ -5,6 +5,7 @@ import processing.video.*;
 Capture video;
 OpenCV opencv;
 Rectangle[] faces;
+PImage face_img; 
 
 
 void setup() {
@@ -13,6 +14,8 @@ void setup() {
   //opencv = new OpenCV(this, "test.jpg");
   opencv = new OpenCV(this,640,480);
   opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE);
+  
+  face_img = loadImage("face.png");
   
   video = new Capture(this,640,480);
   video.start();
@@ -35,12 +38,14 @@ void draw() {
   
   if(faces != null){
     for(int i = 0; i < faces.length; i++){
-      strokeWeight(2);
-      stroke(0,255,0);
-      noFill();
-      rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height);
-      //if(faces[i].x < (640/2) - faces[i].x){
-       
+      
+      //scale(1.0);
+      /**
+       * Al pasar las posiciones del rotro detectado permiten a la imagen
+       * cambiar su posicion y su tamaño en relación al rostro.
+       */
+      image(face_img, faces[i].x, faces[i].y, faces[i].width, faces[i].height);    
+      
     }
   }
   
